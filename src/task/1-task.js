@@ -1,13 +1,20 @@
 import { namespaceWrapper } from "@_koii/namespace-wrapper";
+import axios from 'axios';
 
-export async function task(roundNumber) {
-  // Run your task and store the proofs to be submitted for auditing
-  // The submission of the proofs is done in the submission function
-  try {
-    console.log(`EXECUTE TASK FOR ROUND ${roundNumber}`);
-    // you can optionally return this value to be used in debugging
-    await namespaceWrapper.storeSet("value", "Hello, World!");
-  } catch (error) {
-    console.error("EXECUTE TASK ERROR:", error);
-  }
+export async function task() {
+    try {
+        const response = await axios.get('http://localhost:5000/api/articles');
+        const articles = response.data;
+
+        // Koii task-specific logic
+//        console.log("Fetched Articles:", articles);
+
+        // Process and save data for further steps
+        await namespaceWrapper.storeSet("articles", JSON.stringify(articles));
+
+    } catch (error) {
+        console.error("Error fetching articles:", error);
+    }
 }
+
+//fetchData();
