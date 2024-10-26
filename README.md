@@ -21,8 +21,8 @@ A complete setup integrating React for the frontend, an Express server with MySQ
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/koii-network/task-template
+cd ktask-template
 ```
 
 ### 2. Install Dependencies
@@ -66,7 +66,7 @@ cd ..
     );
     ```
 
-3. **Insert Initial Data**: If you have a `data.json` file, use a script to load data or import via SQL.
+3. **Insert Initial Data**: Use https://rapidapi.com/letscrape-6bRBa3QguO5/api/real-time-news-data to fetch data and save in mySQL.
 
 ### 4. Backend Configuration (`server.js`)
 
