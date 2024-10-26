@@ -1,47 +1,33 @@
 import { namespaceWrapper } from "@_koii/namespace-wrapper";
-import mysql from 'mysql';
+import axios from 'axios';
 
-// Setup MySQL connection
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root', // Apna MySQL username
-    password: '', // Apna MySQL password
-    database: 'koii_network'
-});
+// Helper function to fetch IDs from API endpoint
+const fetchIDsFromAPI = async () => {
+  try {
+    const response = await axios.get('http://localhost:5000/api/articles');
+    return response.data.map(item => item.id); // Extracts only IDs
+  } catch (error) {
+    console.error("Error fetching data from API:", error);
+    return [];
+  }
+};
 
 export async function audit(submission, roundNumber, submitterKey) {
   try {
-    // Fetch data from the first table (e.g., submitted data table)
-    const fetchSubmittedData = () => {
-      return new Promise((resolve, reject) => {
-        db.query("SELECT id FROM articles", (err, result) => {
-          if (err) return reject(err);
-          resolve(result.map(item => item.id)); // Extracts only IDs
-        });
-      });
-    };
+    // Fetch IDs from API
+    const apiIDs = await fetchIDsFromAPI();
 
-    // Fetch data from the second table (e.g., original data table)
-    const fetchOriginalData = () => {
-      return new Promise((resolve, reject) => {
-        db.query("SELECT id FROM articles_verify", (err, result) => {
-          if (err) return reject(err);
-          resolve(result.map(item => item.id)); // Extracts only IDs
-        });
-      });
-    };
+    // Extract IDs from submission data
+    const submittedIDs = submission.map(item => item.id);
 
-    // Get IDs from both tables
-    const [submittedIDs, originalIDs] = await Promise.all([fetchSubmittedData(), fetchOriginalData()]);
-
-    // Compare IDs - check if all IDs in submitted data match with original data
-    const isDataValid = submittedIDs.every(id => originalIDs.includes(id));
+    // Compare IDs - check if all IDs in submitted data match with API data
+    const isDataValid = submittedIDs.every(id => apiIDs.includes(id));
 
     if (isDataValid) {
-      console.log("Audit Successful: Data matches.");
+      console.log("Audit Successful: Submission data matches API data.");
       return true; // Audit passed
     } else {
-      console.log("Audit Failed: Submitted data does not match.");
+      console.log("Audit Failed: Submission data does not match API data.");
       return false; // Audit failed
     }
   } catch (error) {
