@@ -1,12 +1,12 @@
 
 # Tech News Feed
 
-A complete setup integrating React for the frontend, an Express server with MySQL for backend data handling, and Koii Network for decentralized task handling, proof submission, and audit management.
+A complete setup integrating React for the frontend, an Express server with Mongodb for backend data handling, and Koii Network for decentralized task handling, proof submission, and audit management.
 
 ## Project Structure
 
 - **React** - Frontend user interface for displaying data.
-- **Express Server** - Backend API to handle requests and interact with the MySQL database.
+- **Express Server** - Backend API to handle requests and interact with the Mongodb database.
 - **Mongodb** - Database storing fetched data and articles.
 - **Koii Network** - Task template integration for distributed audits, proofs, and rewards in a decentralized setup.
 
@@ -27,7 +27,7 @@ cd koiiNetworkEncode
 
 ### 2. Install Dependencies
 
-#### Backend (Express + MySQL + Koii Network)
+#### Backend (Express + Mongodb + Koii Network)
 ```bash
 yarn install
 ```
@@ -39,7 +39,7 @@ yarn install
 cd ..
 ```
 
-### 3. MySQL Database Setup
+### 3. Mongodb Database Setup
 
 1. **Create Database**: Go to https://www.mongodb.com/ create free database    
 
@@ -176,6 +176,6 @@ yarn start
 ## Technologies Used
 
 - **Frontend**: React, Axios
-- **Backend**: Express.js, MySQL
-- **Database**: MySQL
+- **Backend**: Express.js, Mongodb
+- **Database**: Mongodb
 - **Decentralized Network**: Koii Network (for task and proof management)
